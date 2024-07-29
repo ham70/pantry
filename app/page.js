@@ -1,95 +1,126 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+import React, { useState, useEffect } from 'react';
+
+import { Container, Typography, TextField, Grid, IconButton, Box, Button } from "@mui/material";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+
+import { collection, addDoc, getDoc, querySnapshot, query, onSnapshot, deleteDoc, doc } from "firebase/firestore";
+import {db} from './firebase'
 
 export default function Home() {
+  const [items, setItems] = useState([]);
+
+  const [newItem, setNewItem] = useState({name: '', quantity: ''})
+
+
+  //handling database actions====================================================================================
+  //add items to db
+  const addItem = async (e) => {
+    e.preventDefault()
+    console.log("db addition attempt");
+
+    if(newItem.name !== '' && newItem.quantity !== ''){
+      await addDoc(collection(db, 'items'), {
+        name: newItem.name.trim(),
+        quantity: newItem.quantity,
+      });
+      setNewItem({name: '', quantity: ''});
+    }
+  }
+
+  //read items from db
+  useEffect(() => {
+    const q = query(collection(db, 'items'))
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      let itemsArr = [];
+
+      querySnapshot.forEach((doc) => {
+        itemsArr.push({...doc.data(), id: doc.id})
+      })
+      setItems(itemsArr);
+    })
+  })
+
+
+  //delete items from db
+  const deleteItem = async (id) => {
+    console.log("db deletion attempt");
+  
+    try {
+      await deleteDoc(doc(db, "items", id))
+      console.log("document successfully deleted!");
+    } catch (error) {
+      console.error("Error removing document: ", error);
+    }
+  };
+
+  //hmlt to be rendered on screen=============================================================================
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <Container 
+    sx={{
+      bgcolor: "blue",
+      height: "100vh", 
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      py: 2
+      }}>
+      <Typography variant = "h2" sx={{p:3}}>
+        Pantry.app
+      </Typography>
+      <Grid container spacing={1}
+      sx={{
+        bgcolor: "green",
+        display: "flex",
+        alignItems: "center",
+        m: 0,
+        width: "100%",
+        p: 1
+        }}>
+        <Grid item xs={6}>
+          <TextField
+            id="standard-Controlled" 
+            label="enter item" 
+            variant="standard"
+            value={newItem.name}
+            onChange={(e) => setNewItem({ ...newItem, name: e.target.value})}
+            sx={{bgcolor: "red"}}/>
+        </Grid>
+        <Grid item xs={4}>
+          <TextField 
+            id="standard-Controlled" 
+            label="qauntity"
+            variant="standard"
+            value={newItem.quantity}
+            onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value})}
+            sx={{bgcolor: "red"}}/>
+        </Grid>
+        <Grid item xs={2}>
+          <IconButton onClick={addItem}>
+            <CheckCircleOutlineIcon/>
+          </IconButton>
+        </Grid>
+      </Grid>
+      <Box 
+      sx={{
+        py:1
+        }}>
+        <ul>
+          {items.map((item, index) => (
+            <li key={index}>
+              <Box>
+                <span>{item.name}</span>
+                <span>{item.quantity}</span>
+                <Button 
+                  variant="outlined"
+                  onClick={() => deleteItem(item.id)}>
+                  X
+                </Button>
+              </Box>
+            </li>
+          ))}
+        </ul>
+      </Box>
+    </Container>
   );
 }
