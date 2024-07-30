@@ -18,13 +18,13 @@ export default function Home() {
   const addItem = async (e) => {
     e.preventDefault()
     console.log("db addition attempt");
-
+    setNewItem({name: '', quantity: ''});
+    
     if(newItem.name !== '' && newItem.quantity !== ''){
       await addDoc(collection(db, 'items'), {
         name: newItem.name.trim(),
         quantity: newItem.quantity,
       });
-      setNewItem({name: '', quantity: ''});
     }
   }
 
