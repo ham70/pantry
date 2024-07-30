@@ -7,6 +7,9 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { collection, addDoc, getDoc, querySnapshot, query, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 import {db} from './firebase'
 
+import AddItemsMenu from './components/addItemsMenu.js'
+import FindItemsMenu from './components/findItemsMenu.js'
+
 export default function Home() {
   const [items, setItems] = useState([]);
 
@@ -58,7 +61,7 @@ export default function Home() {
   return (
     <Container 
     sx={{
-      bgcolor: "blue",
+      bgcolor: "grey",
       height: "100vh", 
       display: "flex",
       flexDirection: "column",
@@ -68,59 +71,13 @@ export default function Home() {
       <Typography variant = "h2" sx={{p:3}}>
         Pantry.app
       </Typography>
-      <Grid container spacing={1}
-      sx={{
-        bgcolor: "green",
-        display: "flex",
-        alignItems: "center",
-        m: 0,
-        width: "100%",
-        p: 1
-        }}>
-        <Grid item xs={6}>
-          <TextField
-            id="standard-Controlled" 
-            label="enter item" 
-            variant="standard"
-            value={newItem.name}
-            onChange={(e) => setNewItem({ ...newItem, name: e.target.value})}
-            sx={{bgcolor: "red"}}/>
-        </Grid>
-        <Grid item xs={4}>
-          <TextField 
-            id="standard-Controlled" 
-            label="qauntity"
-            variant="standard"
-            value={newItem.quantity}
-            onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value})}
-            sx={{bgcolor: "red"}}/>
-        </Grid>
-        <Grid item xs={2}>
-          <IconButton onClick={addItem}>
-            <CheckCircleOutlineIcon/>
-          </IconButton>
-        </Grid>
-      </Grid>
       <Box 
       sx={{
         py:1
         }}>
-        <ul>
-          {items.map((item, index) => (
-            <li key={index}>
-              <Box>
-                <span>{item.name}</span>
-                <span>{item.quantity}</span>
-                <Button 
-                  variant="outlined"
-                  onClick={() => deleteItem(item.id)}>
-                  X
-                </Button>
-              </Box>
-            </li>
-          ))}
-        </ul>
       </Box>
+      <AddItemsMenu/>
+      <FindItemsMenu/>
     </Container>
   );
 }
