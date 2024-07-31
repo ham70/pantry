@@ -52,7 +52,7 @@ export default function AddItemsMenu() {
                 <ManualAddItemsBar/>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                Item Two
+                Camera coming soon
             </CustomTabPanel>
         </Box>
     );

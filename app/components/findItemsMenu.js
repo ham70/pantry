@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Box, Tab, Tabs} from '@mui/material';
 
 import AllItemsList from './allItemsList.js';
+import SearchAppBar from './search.js';
 
 
 function CustomTabPanel(props) {
@@ -52,7 +53,7 @@ export default function FindItemsMenu() {
                 <AllItemsList/>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                Search
+                <SearchAppBar/>
             </CustomTabPanel>
         </Box>
     );
