@@ -23,7 +23,8 @@ export default function ManualAddItemsBar() {
     return (
         <Grid container spacing={1}
         sx={{
-        bgcolor: "green",
+        bgcolor: "lightblue",
+        borderRadius: 2,
         display: "flex",
         alignItems: "center",
         m: 0,
@@ -37,7 +38,7 @@ export default function ManualAddItemsBar() {
                 variant="standard"
                 value={newItem.name}
                 onChange={(e) => setNewItem({ ...newItem, name: e.target.value})}
-                sx={{bgcolor: "red"}}/>
+                sx={{bgcolor: "white", borderRadius: 2}}/>
             </Grid>
             <Grid item xs={4}>
                 <TextField 
@@ -46,7 +47,7 @@ export default function ManualAddItemsBar() {
                 variant="standard"
                 value={newItem.quantity}
                 onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value})}
-                sx={{bgcolor: "red"}}/>
+                sx={{bgcolor: "white", borderRadius: 2}}/>
             </Grid>
             <Grid item xs={2}>
                 <IconButton onClick={addItem}>

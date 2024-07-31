@@ -4,6 +4,8 @@ import {Box, List, ListItem, Button} from '@mui/material';
 import { collection, getDoc, querySnapshot, query, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 import {db} from '../firebase.js'
 
+import Item from './item.js';
+
 export default function AllItemsList() {
     const [items, setItems] = useState([]);
 
@@ -36,15 +38,7 @@ export default function AllItemsList() {
         <Box>
             <List>
                 {items.map((item, index) => (
-                    <ListItem key={index}>
-                        <span>{item.name}</span>
-                        <span>{item.quantity}</span>
-                        <Button 
-                        variant="outlined"
-                        onClick={() => deleteItem(item.id)}>
-                        X
-                        </Button>
-                    </ListItem>
+                    <Item key={index} item={item} />
                 ))}
             </List>
         </Box>
