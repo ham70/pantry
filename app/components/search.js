@@ -6,6 +6,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { db } from '../firebase.js';
 
+import Item from './item.js';
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -104,13 +106,7 @@ export default function SearchAppBar() {
                 <List>
                     {filteredItems.map((item, index) => (
                         <ListItem key={index}>
-                            <span>{item.name}</span>
-                            <span>{item.quantity}</span>
-                            <Button
-                                variant="outlined"
-                                onClick={() => deleteItem(item.id)}>
-                                X
-                            </Button>
+                            <Item key={index} item={item} />
                         </ListItem>
                     ))}
                 </List>
