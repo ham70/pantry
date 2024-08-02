@@ -42,7 +42,7 @@ const Item = ({ item }) => {
 
     return (
         <ListItem>
-            <Box display="flex" justifyContent="space-between" alignItems="center" width="100%" sx={{
+            <Box display="grid" gridTemplateColumns="1fr auto auto auto" alignItems="center" width="100%" sx={{
                 border: "solid",
                 borderRadius: 4,
                 px:3
