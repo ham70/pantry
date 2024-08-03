@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import { AppBar, Box, Toolbar, IconButton, InputBase, List, ListItem, Button } from '@mui/material';
+import { Paper, AppBar, Box, Toolbar, IconButton, InputBase, List, ListItem, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { collection,  querySnapshot, query, onSnapshot, getDocs, doc } from "firebase/firestore";
 import { db } from '../firebase.js';
 
 import Item from './item.js';
@@ -58,35 +58,25 @@ export default function SearchAppBar() {
     };
 
     useEffect(() => {
-        const fetchItems = async () => {
-            const querySnapshot = await getDocs(collection(db, 'items'));
-            let itemsArr = [];
-            querySnapshot.forEach((doc) => {
-                itemsArr.push({ ...doc.data(), id: doc.id });
-            });
-            setItems(itemsArr);
-        };
+        const q = query(collection(db, 'items'))
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        let itemsArr = [];
 
-        fetchItems();
-    }, []);
+        querySnapshot.forEach((doc) => {
+            itemsArr.push({...doc.data(), id: doc.id})
+        })
+            setItems(itemsArr);
+        })
+    })
 
     const filteredItems = items.filter(item => 
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const deleteItem = async (id) => {
-        try {
-            await deleteDoc(doc(db, "items", id));
-            console.log("Document successfully deleted!");
-        } catch (error) {
-            console.error("Error removing document: ", error);
-        }
-    };
-
     return (
         <Box>
-            <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static">
+            <Box sx={{ flexGrow: 1}}>
+                <AppBar position="static" sx={{borderRadius: 4, bgcolor: "#2a75f3"}}>
                     <Toolbar>
                         <Search>
                             <SearchIconWrapper>
@@ -102,14 +92,16 @@ export default function SearchAppBar() {
                     </Toolbar>
                 </AppBar>
             </Box>
-            <Box>
-                <List>
-                    {filteredItems.map((item, index) => (
-                        <ListItem key={index}>
-                            <Item key={index} item={item} />
-                        </ListItem>
-                    ))}
-                </List>
+            <Box sx={{py:2}}>
+                <Paper elevation={6} sx={{ borderRadius: 4, bgcolor: "#363535", color:"white"}}>
+                    <List>
+                        {filteredItems.map((item, index) => (
+                            <ListItem key={index}>
+                                <Item key={index} item={item} />
+                            </ListItem>
+                        ))}
+                    </List>
+                </Paper>
             </Box>
         </Box>
     );
