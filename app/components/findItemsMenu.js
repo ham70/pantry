@@ -43,10 +43,10 @@ export default function FindItemsMenu() {
 
     return (
         <Box sx={{ width: '100%' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="All Items" {...a11yProps(0)} />
-                    <Tab label="Search for Items" {...a11yProps(1)} />
+                    <Tab label="All Items" {...a11yProps(0)} sx ={{color:"white"}}/>
+                    <Tab label="Search for Items" {...a11yProps(1)} sx ={{color:"white"}}/>
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>

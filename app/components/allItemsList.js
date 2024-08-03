@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Box, List, ListItem, Button} from '@mui/material';
+import {Box, List, ListItem, Button, Paper} from '@mui/material';
 
 import { collection, getDoc, querySnapshot, query, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 import {db} from '../firebase.js'
@@ -36,11 +36,13 @@ export default function AllItemsList() {
 
     return (
         <Box>
-            <List>
-                {items.map((item, index) => (
-                    <Item key={index} item={item} />
-                ))}
-            </List>
+            <Paper elevation={6} sx={{ borderRadius: 4, bgcolor: "#363535", color:"white"}}>
+                <List>
+                    {items.map((item, index) => (
+                        <Item key={index} item={item}/>
+                    ))}
+                </List>
+            </Paper>
         </Box>
     )
 }

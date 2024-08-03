@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <Container 
     sx={{
-      background: "grey",
+      background: "#363535",
       minHeight: "100vh", 
       display: "flex",
       flexDirection: "column",

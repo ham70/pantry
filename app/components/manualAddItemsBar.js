@@ -23,7 +23,7 @@ export default function ManualAddItemsBar() {
     return (
         <Grid container spacing={1}
         sx={{
-        bgcolor: "lightblue",
+        bgcolor: "#2a75f3",
         borderRadius: 2,
         display: "flex",
         alignItems: "center",
@@ -50,7 +50,7 @@ export default function ManualAddItemsBar() {
                 sx={{bgcolor: "white", borderRadius: 2}}/>
             </Grid>
             <Grid item xs={2}>
-                <IconButton onClick={addItem}>
+                <IconButton onClick={addItem} sx={{bgcolor: "white"}}>
                     <CheckCircleOutlineIcon/>
                 </IconButton>
             </Grid>

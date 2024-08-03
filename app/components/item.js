@@ -43,18 +43,19 @@ const Item = ({ item }) => {
     return (
         <ListItem>
             <Box display="grid" gridTemplateColumns="1fr auto auto auto" alignItems="center" width="100%" sx={{
-                border: "solid",
                 borderRadius: 4,
-                px:3
+                px:3,
+                bgcolor: "black"
             }}>
                 <Typography>{item.name}</Typography>
                 <Box display="flex" alignItems="center">
-                    <IconButton onClick={() => updateItem(item.id, item.quantity, false)}><RemoveCircleIcon/></IconButton>
+                    <IconButton onClick={() => updateItem(item.id, item.quantity, false)} sx={{color: "white"}}><RemoveCircleIcon/></IconButton>
                     <Typography>{item.quantity}</Typography>
-                    <IconButton onClick={() => updateItem(item.id, item.quantity, true)}><AddCircleIcon/></IconButton>
+                    <IconButton onClick={() => updateItem(item.id, item.quantity, true)} sx={{color: "white"}}><AddCircleIcon/></IconButton>
                 </Box>
                 <IconButton 
                     variant="outlined"
+                    sx={{color: "#DE5556"}}
                     onClick={() => deleteItem(item.id)}>
                     <DeleteIcon/>
                 </IconButton>

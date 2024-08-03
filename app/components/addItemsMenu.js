@@ -44,15 +44,11 @@ export default function AddItemsMenu() {
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Manual Add" {...a11yProps(0)} />
-                    <Tab label="Camera Add" {...a11yProps(1)} />
+                    <Tab label="Manual Add" {...a11yProps(0)} sx ={{color:"white"}}/>
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
                 <ManualAddItemsBar/>
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-                Camera coming soon
             </CustomTabPanel>
         </Box>
     );
