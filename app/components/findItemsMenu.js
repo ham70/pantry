@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Box, Tab, Tabs} from '@mui/material';
 
 import AllItemsList from './allItemsList.js';
 import SearchAppBar from './search.js';
 
-
+//mui tab component--------------------------------------------
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
     return (

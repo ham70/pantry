@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItem, Box, Button, Typography, IconButton, ButtonGroup } from '@mui/material';
+import { ListItem, Box, Typography, IconButton } from '@mui/material';
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from '../firebase.js';
 
@@ -8,6 +8,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 const Item = ({ item }) => {
+    //delete item for db
     const deleteItem = async (id) => {
         console.log("db deletion attempt");
 
@@ -19,6 +20,7 @@ const Item = ({ item }) => {
         }
     };
 
+    //updating item quantity in db
     const updateItem = async (id, amount, add) => {
         console.log("item update attempt");
 

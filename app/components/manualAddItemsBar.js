@@ -7,6 +7,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 export default function ManualAddItemsBar() {
     const [newItem, setNewItem] = useState({name: '', quantity: ''})
 
+    //adding item to db
     const addItem = async (e) => {
         e.preventDefault()
         console.log("db addition attempt");

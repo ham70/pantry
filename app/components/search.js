@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import { Paper, AppBar, Box, Toolbar, IconButton, InputBase, List, ListItem, Button } from '@mui/material';
+import { Paper, AppBar, Box, Toolbar, InputBase, List, ListItem } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { collection,  querySnapshot, query, onSnapshot, getDocs, doc } from "firebase/firestore";
+import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from '../firebase.js';
 
 import Item from './item.js';
 
+//mui search bar component--------------------------------------------------------------
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -57,6 +58,7 @@ export default function SearchAppBar() {
         setSearchTerm(event.target.value);
     };
 
+    //we retrieve all items and then filter them based on names
     useEffect(() => {
         const q = query(collection(db, 'items'))
         const unsubscribe = onSnapshot(q, (querySnapshot) => {

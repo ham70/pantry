@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {Box, List, ListItem, Button, Paper} from '@mui/material';
+import {Box, List, Paper} from '@mui/material';
 
-import { collection, getDoc, querySnapshot, query, onSnapshot, deleteDoc, doc } from "firebase/firestore";
+import { collection, query, onSnapshot} from "firebase/firestore";
 import {db} from '../firebase.js'
 
 import Item from './item.js';
@@ -21,18 +21,6 @@ export default function AllItemsList() {
             setItems(itemsArr);
         })
     })
-    //delete items from db
-    const deleteItem = async (id) => {
-        console.log("db deletion attempt");
-    
-        try {
-        await deleteDoc(doc(db, "items", id))
-        console.log("document successfully deleted!");
-        } catch (error) {
-        console.error("Error removing document: ", error);
-        }
-    };
-
 
     return (
         <Box>
