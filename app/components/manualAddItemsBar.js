@@ -44,7 +44,7 @@ export default function ManualAddItemsBar() {
             <Grid item xs={4}>
                 <TextField 
                 id="standard-Controlled" 
-                label="qauntity"
+                label="quantity"
                 variant="standard"
                 value={newItem.quantity}
                 onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value})}
